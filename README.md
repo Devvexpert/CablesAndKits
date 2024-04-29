@@ -1,5 +1,5 @@
 
-## Installation steps\
+## Installation steps
 \
 Step 1: Clone the repository\
 Step 2: run command "composer install"\
@@ -9,4 +9,4 @@ Step 5: run command "php artisan db:seed"\
 Step 6: run command "php artisan serve"\
 Step 7: open link http://localhost:8000 in your browser.\
 Step 8: click login to login into the system for sending messages\
-Step 9: use login credentials as "test@example.com" using password "test@123"\
+Step 9: use login credentials as "test@example.com" using password "test@123"
