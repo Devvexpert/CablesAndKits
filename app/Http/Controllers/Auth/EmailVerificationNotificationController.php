@@ -6,10 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Class EmailVerificationNotificationController
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class EmailVerificationNotificationController extends Controller
 {
     /**
      * Send a new email verification notification.
+     *
+     * @param  Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {

@@ -12,11 +12,16 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\UserKey;
 use App\Traits\EncryptDecrypt;
 
-
+/**
+ * Class AuthenticatedSessionController
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class AuthenticatedSessionController extends Controller
 {
 
     use EncryptDecrypt;
+
     /**
      * Display the login view.
      */
@@ -27,6 +32,9 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Handle an incoming authentication request.
+     *
+     * @param  LoginRequest $request
+     * @return RedirectResponse
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -35,29 +43,35 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // Insert new encryption key after every login attempt
-        $this->createEncryptionKey();
+        $this->_createEncryptionKey();
 
-        return redirect()->intended(route('dashboard',absolute: false));
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**
      * Create new key for a user for message encryption
      */
-    private function createEncryptionKey(){
+    private function _createEncryptionKey(): void
+    {
 
         $user = Auth::user();
         $encryptionKey = $this->generateEncryptionKey($user->id);
         
-        UserKey::create([
+        UserKey::create(
+            [
             'sender_id' => $user->id,
             'encrypted_key' => $encryptionKey,
-        ]);
+            ]
+        );
 
     }
 
-    /**
-     * Destroy an authenticated session.
-     */
+     /**
+      * Destroy an authenticated session.
+      *
+      * @param  Request $request
+      * @return RedirectResponse
+      */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
